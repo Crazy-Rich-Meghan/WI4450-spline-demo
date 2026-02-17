@@ -5,3 +5,4 @@ ipywidgets
 scipy
 splinepy
 pygismo
+voila
