@@ -1,8 +1,8 @@
 numpy
 matplotlib==3.8.2
 pyparsing==3.1.1
-ipywidgets
+ipywidgets>=8.0
+widgetsnbextension
 scipy
 splinepy
 pygismo
-voila
