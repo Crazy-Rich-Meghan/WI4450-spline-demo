@@ -1,5 +1,6 @@
 numpy
-matplotlib
+matplotlib>=3.7,<3.10
+pyparsing>=3.0,<4
 ipywidgets
 scipy
 splinepy
