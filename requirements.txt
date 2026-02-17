@@ -1,6 +1,6 @@
 numpy
-matplotlib>=3.7,<3.10
-pyparsing>=3.0,<4
+matplotlib==3.8.2
+pyparsing==3.1.1
 ipywidgets
 scipy
 splinepy
