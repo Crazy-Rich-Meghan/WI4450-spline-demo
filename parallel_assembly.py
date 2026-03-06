@@ -125,11 +125,14 @@ def main():
     F_global = np.zeros(n_dofs) if rank == 0 else None
     comm.Reduce(F_local, F_global, op=MPI.SUM, root=0)
 
-    # Reduce stiffness matrix: convert to dense, sum, convert back
-    # (For large problems, use distributed sparse formats instead)
-    K_dense_local = K_local.toarray()
-    K_dense_global = np.zeros_like(K_dense_local) if rank == 0 else None
-    comm.Reduce(K_dense_local, K_dense_global, op=MPI.SUM, root=0)
+    # Gather sparse COO triplets instead of dense matrix
+    K_coo = K_local.tocoo()
+    local_nnz = np.array(K_coo.nnz, dtype=np.int32)
+    all_nnz = comm.gather(local_nnz, root=0)
+
+    all_rows = comm.gather(K_coo.row.astype(np.int32), root=0)
+    all_cols = comm.gather(K_coo.col.astype(np.int32), root=0)
+    all_vals = comm.gather(K_coo.data, root=0)
 
     t_assembly = MPI.Wtime() - t0
 
@@ -137,7 +140,11 @@ def main():
     if rank == 0:
         print(f"  Assembly time: {t_assembly:.4f}s")
 
-        K_global = sparse.csr_matrix(K_dense_global)
+        rows_cat = np.concatenate(all_rows)
+        cols_cat = np.concatenate(all_cols)
+        vals_cat = np.concatenate(all_vals)
+        K_global = sparse.coo_matrix((vals_cat, (rows_cat, cols_cat)),
+                                     shape=(n_dofs, n_dofs)).tocsr()
 
         # Boundary DOFs
         n0 = basis.component(0).size()
