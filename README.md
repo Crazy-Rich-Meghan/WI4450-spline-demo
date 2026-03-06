@@ -7,3 +7,9 @@ Lecture demo notebooks for WI4450.
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Crazy-Rich-Meghan/WI4450-spline-demo/main?urlpath=notebooks/lecture2_demo.ipynb)
 
 B-spline basis properties, NURBS, and refinement strategies. Click the badge above to run in your browser.
+
+## Lecture 4
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Crazy-Rich-Meghan/WI4450-spline-demo/main?urlpath=notebooks/lecture4.ipynb)
+
+Galerkin method, IGA discretization, boundary conditions, variable coefficients, and parallel assembly.

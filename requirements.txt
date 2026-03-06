@@ -6,3 +6,4 @@ widgetsnbextension
 scipy
 splinepy
 pygismo
+mpi4py
